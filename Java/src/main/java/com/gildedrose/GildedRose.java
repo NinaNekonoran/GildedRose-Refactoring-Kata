@@ -1,8 +1,10 @@
 package com.gildedrose;
 
-import com.gildedrose.pop.Specialtem;
+import com.gildedrose.enums.SpecialtemEnum;
 
 class GildedRose {
+
+    public static final int MAX_QUALITY = 50;
 
     Item[] items;
 
@@ -12,55 +14,56 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
+            item.quality = updateQualityWithNormalProcess(item);
+            item.sellIn = updateSellIn(item);
+            item.quality = updateQualityWithExpiredProcess(item);
+        }
+    }
 
-            if (!item.name.equals(Specialtem.AGED_BRIE)
-                    && !item.name.equals(Specialtem.BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
-                if (item.quality > 0) {
-                    if (!item.name.equals(Specialtem.SULFURAS_HAND_OF_RAGNAROS)) {
-                        item.quality = item.quality - 1;
+    private int updateQualityWithNormalProcess(final Item item) {
+        int quality = item.quality;
+        if (SpecialtemEnum.contains(item.name)) {
+            if(item.quality < MAX_QUALITY) {
+                quality += 1;
+                if (SpecialtemEnum.BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.getItemName().equals(item.name)){
+                    if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
+                        quality += 1;
                     }
+                    if (item.sellIn < 6 && item.quality < MAX_QUALITY) {
+                        quality += 1;
+                    }
+                }
+
+            }
+        } else if ( item.quality > 0) {
+            quality -=  1;
+        }
+        return quality;
+    }
+
+    private int updateSellIn(final Item item) {
+        int sellIn = item.sellIn;
+        if (!SpecialtemEnum.SULFURAS_HAND_OF_RAGNAROS.getItemName().equals(item.name)) {
+            sellIn -= 1;
+        }
+        return sellIn;
+    }
+
+    private int updateQualityWithExpiredProcess(final Item item) {
+        int quality = item.quality;
+        if (item.sellIn < 0) {
+            if (item.name.equals(SpecialtemEnum.AGED_BRIE.getItemName()))  {
+                if (item.quality < MAX_QUALITY) {
+                    quality += 1;
                 }
             } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-
-                    if (item.name.equals(Specialtem.BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!item.name.equals(Specialtem.SULFURAS_HAND_OF_RAGNAROS)) {
-                item.sellIn = item.sellIn - 1;
-            }
-
-            if (item.sellIn < 0) {
-                if (!item.name.equals(Specialtem.AGED_BRIE)) {
-                    if (!item.name.equals(Specialtem.BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
-                        if (item.quality > 0) {
-                            if (!item.name.equals(Specialtem.SULFURAS_HAND_OF_RAGNAROS)) {
-                                item.quality = item.quality - 1;
-                            }
-                        }
-                    } else {
-                        item.quality = item.quality - item.quality;
-                    }
+                if (!SpecialtemEnum.contains(item.name) && item.quality > 0 ) {
+                    quality = item.quality - 1;
                 } else {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
-                    }
+                    quality = 0;
                 }
             }
         }
+        return quality;
     }
 }

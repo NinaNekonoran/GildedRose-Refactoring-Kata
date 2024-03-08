@@ -1,6 +1,5 @@
 package com.gildedrose.items;
 
-import com.gildedrose.items.NormalItem;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

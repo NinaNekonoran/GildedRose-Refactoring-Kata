@@ -1,8 +1,12 @@
 package com.gildedrose.items;
 
 public class NormalItem extends Item implements ItemBehaviour{
-    public NormalItem(String name, int sellIn, int quality) {
+    public NormalItem(final String name, final int sellIn, final int quality) {
         super(name, sellIn, quality);
+    }
+
+    public NormalItem(final Item item) {
+        super(item.name, item.sellIn, item.quality);
     }
     @Override
     public void updateSellIn() {

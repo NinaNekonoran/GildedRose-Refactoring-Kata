@@ -21,12 +21,12 @@ class GildedRose {
         for(int i = 0; i < items.length; i++){
             Item newItem;
             if(SpecialItemEnum.contains(items[i].name)){
-                newItem = new SpecialItem(items[i].name, items[i].sellIn, items[i].quality);
+                newItem = new SpecialItem(items[i]);
             } else if(items[i].name.toLowerCase().contains(ConjuredItem.KEYWORD.toLowerCase())){
-                newItem = new ConjuredItem(items[i].name, items[i].sellIn, items[i].quality);
+                newItem = new ConjuredItem(items[i]);
             }
             else {
-                newItem = new NormalItem(items[i].name, items[i].sellIn, items[i].quality);
+                newItem = new NormalItem(items[i]);
             }
             items[i] = newItem;
             this.items.add((ItemBehaviour) newItem);

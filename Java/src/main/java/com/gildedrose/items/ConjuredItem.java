@@ -4,8 +4,11 @@ public class ConjuredItem extends NormalItem{
 
     public static final String KEYWORD = "Conjured";
 
-    public ConjuredItem(String name, int sellIn, int quality) {
+    public ConjuredItem(final String name, final int sellIn, final int quality) {
         super(name, sellIn, quality);
+    }
+    public ConjuredItem(final Item item) {
+        super(item.name, item.sellIn, item.quality);
     }
 
     @Override

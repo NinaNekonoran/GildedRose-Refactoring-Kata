@@ -5,8 +5,12 @@ import com.gildedrose.enums.SpecialItemEnum;
 public class SpecialItem extends Item implements ItemBehaviour {
     public static final int MAX_QUALITY = 50;
 
-    public SpecialItem(String name, int sellIn, int quality) {
+    public SpecialItem(final String name, final int sellIn, final int quality) {
         super(name, sellIn, quality);
+    }
+
+    public SpecialItem(final Item item) {
+        super(item.name, item.sellIn, item.quality);
     }
 
     @Override

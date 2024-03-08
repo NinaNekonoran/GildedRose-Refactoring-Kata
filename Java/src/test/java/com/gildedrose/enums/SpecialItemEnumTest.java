@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SpecialtemEnumTest {
+class SpecialItemEnumTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -15,7 +15,7 @@ class SpecialtemEnumTest {
         "pop,false"
     })
     void contains(final String test, final boolean expected) {
-        assertEquals(expected, SpecialtemEnum.contains(test));
+        assertEquals(expected, SpecialItemEnum.contains(test));
     }
 
 

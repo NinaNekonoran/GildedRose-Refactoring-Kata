@@ -1,69 +1,35 @@
 package com.gildedrose;
 
-import com.gildedrose.enums.SpecialtemEnum;
+import com.gildedrose.enums.SpecialItemEnum;
+import com.gildedrose.items.Item;
+import com.gildedrose.items.ItemBehaviour;
+import com.gildedrose.items.NormalItem;
+import com.gildedrose.items.SpecialItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class GildedRose {
 
-    public static final int MAX_QUALITY = 50;
-
-    Item[] items;
+    List<ItemBehaviour> items;
 
     public GildedRose(Item[] items) {
-        this.items = items;
+        this.items = new ArrayList<>(items.length);
+        for(Item item: items){
+            if(SpecialItemEnum.contains(item.name)){
+                this.items.add(new SpecialItem(item.name, item.sellIn, item.quality));
+            } else {
+                this.items.add(new NormalItem(item.name, item.sellIn, item.quality));
+            }
+        }
     }
 
     public void updateQuality() {
-        for (Item item : items) {
-            item.quality = updateQualityWithNormalProcess(item);
-            item.sellIn = updateSellIn(item);
-            item.quality = updateQualityWithExpiredProcess(item);
+        for (ItemBehaviour item : items) {
+            item.updateQualityWithNormalProcess();
+            item.updateSellIn();
+            item.updateQualityWithExpiredProcess();
         }
     }
 
-    private int updateQualityWithNormalProcess(final Item item) {
-        int quality = item.quality;
-        if (SpecialtemEnum.contains(item.name)) {
-            if(item.quality < MAX_QUALITY) {
-                quality += 1;
-                if (SpecialtemEnum.BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.getItemName().equals(item.name)){
-                    if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
-                        quality += 1;
-                    }
-                    if (item.sellIn < 6 && item.quality < MAX_QUALITY) {
-                        quality += 1;
-                    }
-                }
-
-            }
-        } else if ( item.quality > 0) {
-            quality -=  1;
-        }
-        return quality;
-    }
-
-    private int updateSellIn(final Item item) {
-        int sellIn = item.sellIn;
-        if (!SpecialtemEnum.SULFURAS_HAND_OF_RAGNAROS.getItemName().equals(item.name)) {
-            sellIn -= 1;
-        }
-        return sellIn;
-    }
-
-    private int updateQualityWithExpiredProcess(final Item item) {
-        int quality = item.quality;
-        if (item.sellIn < 0) {
-            if (item.name.equals(SpecialtemEnum.AGED_BRIE.getItemName()))  {
-                if (item.quality < MAX_QUALITY) {
-                    quality += 1;
-                }
-            } else {
-                if (!SpecialtemEnum.contains(item.name) && item.quality > 0 ) {
-                    quality = item.quality - 1;
-                } else {
-                    quality = 0;
-                }
-            }
-        }
-        return quality;
-    }
 }

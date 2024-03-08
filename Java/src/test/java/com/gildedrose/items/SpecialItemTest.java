@@ -12,7 +12,7 @@ class SpecialItemTest {
     @CsvSource({
         "AGED_BRIE,0,50,50,Quality max use case",
         "AGED_BRIE,0,5,6,AGED_BRIE use case",
-        "SULFURAS_HAND_OF_RAGNAROS,0,5,6,Sulfuras use case",
+        "SULFURAS_HAND_OF_RAGNAROS,0,80,80,Sulfuras use case",
         "BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT,12,5,6,TAFKAL80ETC use case with 12 sellIn",
         "BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT,8,5,7,TAFKAL80ETC use case with 8 sellIn",
         "BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT,4,5,8,TAFKAL80ETC use case with 4 sellIn"
@@ -52,8 +52,8 @@ class SpecialItemTest {
         "AGED_BRIE,5,50,50,Quality max use case with sellIn>0",
         "AGED_BRIE,-1,5,6,AGED_BRIE use case with sellIn<0",
         "AGED_BRIE,6,5,5,AGED_BRIE use case with sellIn>0",
-        "SULFURAS_HAND_OF_RAGNAROS,-1,5,0,Sulfuras use case with sellIn<0",
-        "SULFURAS_HAND_OF_RAGNAROS,8,5,5,Sulfuras use case with sellIn>0",
+        "SULFURAS_HAND_OF_RAGNAROS,-1,80,80,Sulfuras use case with sellIn<0",
+        "SULFURAS_HAND_OF_RAGNAROS,8,80,80,Sulfuras use case with sellIn>0",
         "BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT,-5,6,0,TAFKAL80ETC with sellIn<0",
         "BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT,9,8,8,TAFKAL80ETC with sellIn>0"
     })
